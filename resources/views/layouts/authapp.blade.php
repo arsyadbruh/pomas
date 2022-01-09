@@ -34,7 +34,7 @@
         .title-brand {
             font-weight: 900;
             font-size: 4rem;
-            color: #ff4343;
+            color: #517ca4;
         }
 
         .form-content {

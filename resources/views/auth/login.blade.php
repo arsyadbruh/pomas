@@ -26,7 +26,7 @@
             @enderror
         </div>
 
-        <button class="w-100 btn btn-lg btn-danger mb-3" type="submit">Sign in</button>
+        <button class="w-100 btn btn-lg btn-primary mb-3" type="submit">Sign in</button>
         <span>Belum punya akun ? <a href="{{ route('register') }}">Daftar Sekarang</a> </span>
 
 

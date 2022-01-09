@@ -49,7 +49,7 @@
             @enderror
         </div>
 
-        <button class="w-100 btn btn-lg btn-danger mb-3" type="submit">Register</button>
+        <button class="w-100 btn btn-lg btn-primary mb-3" type="submit">Register</button>
         <span>Sudah punya akun <a href="{{ route('login') }}">Login</a> </span>
 
 </form>
