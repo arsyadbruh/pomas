@@ -1,3 +1,8 @@
+body {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+}
+
 .form-control:focus {
     box-shadow: none;
 }
@@ -5,4 +10,29 @@
 .btn-check:focus + .btn,
 .btn:focus {
     box-shadow: none;
+}
+
+.btn-check:checked + .btn-outline-primary:focus,
+.btn-check:active + .btn-outline-primary:focus,
+.btn-outline-primary:active:focus,
+.btn-outline-primary.active:focus,
+.btn-outline-primary.dropdown-toggle.show:focus,
+.btn-check:checked + .btn-primary:focus,
+.btn-check:active + .btn-primary:focus,
+.btn-primary:active:focus,
+.btn-primary.active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
+    box-shadow: none
+}
+
+.btn-primary,
+.btn-outline-primary:hover {
+    color: #fff;
+    background-color: #517ca4;
+    border-color: #517ca4;
+}
+
+.btn-outline-primary {
+    color: #517ca4;
+    border-color: #517ca4;
 }

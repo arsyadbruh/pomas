@@ -1,0 +1,70 @@
+/* ============================== */
+/* Hero home section */
+/* ============================== */
+
+.hero-home img {
+    width: 100%;
+    max-width: 400px;
+}
+
+@media (min-width: 992px) {
+    .hero-home img {
+        width: 100%;
+        max-width: 500px;
+    }
+}
+
+
+/* ============================== */
+/* why home section */
+/* ============================== */
+
+.why-home {
+    background-color: #517ca4;
+}
+
+.why-home .why-text {
+    width: 100%;
+    max-width: 515px;
+}
+
+.why-home .card {
+    border-radius: 1rem;
+}
+
+.why-home .card-title {
+    color: #517ca4;
+}
+
+
+/* ============================== */
+/* why home section */
+/* ============================== */
+
+.slogan-home {
+    background-color: #517ca4;
+}
+
+.slogan-home img {
+    width: 100%;
+    max-width: 400px;
+}
+
+.slogan-content {
+    width: 100%;
+    max-width: 450px;
+}
+
+.slogan-content h1 {
+    font-size: 3.2rem;
+}
+
+.slogan-content .divider {
+    height: 5px;
+    width: 150px;
+    background-color: #fff;
+}
+
+
+
+

@@ -13,8 +13,6 @@
     {{-- css --}}
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/base.css') }}">
-
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
         html,
         body {
