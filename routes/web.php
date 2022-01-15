@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/test', [TestController::class, 'index'])->name('test');
+Route::get('/onStatus', [TestController::class, 'changeStatus'])->name('onStatus');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function(){return view('dashboard.index');});
+});
