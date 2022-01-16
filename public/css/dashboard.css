@@ -1,0 +1,105 @@
+/* Sidebar */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100; /* Behind the navbar */
+    padding: 48px 0 0; /* Height of navbar */
+    background-color: #292f4c;
+
+}
+
+/* @media (max-width: 767.98px) {
+    .sidebar {
+        top: 5rem;
+    }
+} */
+
+.sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: 0.5rem;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.sidebar .nav-item {
+    margin: 10px 0;
+}
+
+.sidebar .nav-link {
+    font-weight: 400;
+    color: #333;
+    padding: 0.8rem 1rem;
+    font-size: 1.3rem;
+}
+
+.sidebar .nav-link.active{
+    font-weight: 600;
+    background-color: #6a6e82;
+}
+
+.sidebar .nav-link.active {
+    color: #ececec;
+}
+
+.sidebar .nav-link .bi {
+    font-size: 1.3rem;
+    margin-right: 0.6rem;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.acitve{
+    color: inherit;
+}
+
+.sidebar-heading {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+/*
+ * Navbar
+ */
+
+.navbar {
+    background-color: #292f4c;
+}
+
+.navbar-brand {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-size: 1rem;
+}
+
+.navbar .navbar-toggler {
+    top: 0.25rem;
+    right: 1rem;
+}
+
+.navbar-nav .dropdown-menu {
+    position: absolute;
+}
+
+@media (min-width: 992px) {
+    .navbar-expand-lg .navbar-nav .dropdown-menu {
+        position: absolute;
+    }
+}
+
+.dropdown-menu[data-bs-popper] {
+    left: -90px;
+}
+
+
+/* Project */
+
+#project .project-card .bi {
+    font-size: 5rem;
+    padding: 0 1.5rem;
+    background-color: #333;
+    border-radius: 1rem;
+}

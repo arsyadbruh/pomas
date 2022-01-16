@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,16 +17,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function(){
     return view('welcome');
-});
+})->name('welcome');
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/test', [TestController::class, 'index'])->name('test');
 Route::get('/onStatus', [TestController::class, 'changeStatus'])->name('onStatus');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function(){return view('dashboard.index');});
+Auth::routes();
+
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard/my-task', function(){return view('dashboard.mytask',  ['pageTitle' => 'mytask']);})->name('mytask');
+    Route::get('/dashboard', function(){return redirect()->route('project.index');});
+    Route::resource('project', ProjectController::class);
+
+    // Dashboard profile user
+    Route::resource('profile', UserController::class);
+    Route::get('/profile/edit/password', [UserController::class, 'editPassword'])->name('profile.passwordEdit');
+    Route::post('/profile/edit/password', [UserController::class, 'updatePassword'])->name('profile.passwordUpdate');
 });

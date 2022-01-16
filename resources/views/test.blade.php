@@ -7,10 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> --}}
     <script src="{{ asset('js/app.js') }}"></script>
-    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> --}}
 </head>
 
 <body class="bg-light">
@@ -28,7 +25,7 @@
         @endforeach
 
         <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div id="liveToastChecked" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
                     <img src="" class="rounded me-2" alt="...">
                     <strong class="me-auto">Bootstrap</strong>
@@ -40,18 +37,30 @@
                 </div>
             </div>
         </div>
+
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div id="liveToastUncheck" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <img src="" class="rounded me-2" alt="...">
+                    <strong class="me-auto">Bootstrap</strong>
+                    <small>3 second</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Not Check
+                </div>
+            </div>
+        </div>
     </div>
 
 
 
     <script>
-
-
         $(function() {
             $('.cekbox').change(function() {
-                let toastLiveExample = document.getElementById('liveToast');
+
                 let statusChecked = $(this).is(':checked');
-                let isCheck =  statusChecked ? 1 : 0;
+                let isCheck = statusChecked ? 1 : 0;
                 let data_id = $(this).val();
                 $.ajax({
                     type: "GET",
@@ -66,9 +75,13 @@
                     }
                 })
 
-                let toast = new bootstrap.Toast(toastLiveExample);
-                toast.show();
+                let toastLiveChecked = document.getElementById('liveToastChecked');
+                let toastLiveUnCheck = document.getElementById('liveToastunCheck');
 
+                let toast = statusChecked
+                    ? new bootstrap.Toast(toastLiveChecked)
+                    : new bootstrap.Toast(toastLiveUnCheck)
+                toast.show();
             });
         });
     </script>
