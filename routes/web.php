@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -36,4 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('profile', UserController::class);
     Route::get('/profile/edit/password', [UserController::class, 'editPassword'])->name('profile.passwordEdit');
     Route::post('/profile/edit/password', [UserController::class, 'updatePassword'])->name('profile.passwordUpdate');
+
+    // Task Controller
+    Route::resource('task', TaskController::class);
+    Route::get('/taskupdate', [TaskController::class, 'toUpdate']);
 });

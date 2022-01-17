@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,10 +43,18 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
         $project = new Project();
         $user = User::find(Auth::user()->id);
-        $project->name = $request->nama;
+
+        $request->validate([
+           'name' => 'required',
+           'description' => 'required'
+        ]);
+
+        $project->name = $request->name;
+        $project->description = $request->description;
+        $project->owner_id = $user->id;
 
         if($project->save()) {
             $projectdata = Project::latest()->first();
@@ -66,7 +75,8 @@ class ProjectController extends Controller
         //
         $pageTitle = "myproject";
         $projectData = $project;
-        return view('dashboard.project', compact('pageTitle','projectData'));
+        $taskData = Task::where('project_id', $project->id)->get();
+        return view('dashboard.project', compact('pageTitle','projectData', 'taskData'));
     }
 
     /**

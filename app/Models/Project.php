@@ -25,6 +25,7 @@ class Project extends Pivot
      */
     protected $fillable = [
         'name',
+        'description',
     ];
 
     public function users()
@@ -33,5 +34,9 @@ class Project extends Pivot
             ->withTimestamps()
             ->withPivot('user_id')
             ->wherePivot('user_id', Auth::user()->id);
+    }
+
+    public function tasks(){
+        return $this->hasMany(Task::class);
     }
 }
