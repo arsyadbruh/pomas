@@ -2,19 +2,43 @@
 
 @section('content')
     <div>
-        <h1>{{ $projectData->name }}</h1>
+        <h1 class="text-capitalize">
+            <a href="{{ route('project.index') }}" class="text-black text-decoration-none">
+                <i class="bi bi-arrow-left-circle"></i>
+            </a>
+             {{ $projectData->name }}
+            </h1>
         <hr>
-        @if (session('taskSuccess'))
-            <p>Sukses adding</p>
-        @endif
-        <form action="{{ route('task.store') }}" method="POST" id="form-task">
+        <div>
+            @if (session('addMemberSuccess'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{ session('addMemberSuccess') }} !</strong> Member with {{ session('emailMember') }} has added to this project
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+            <form action="{{ route('project.addMember') }}" method="POST">
+                @csrf
+                <input type="text" name="member" id="member">
+                @error('member')
+                    <p>{{ $message }}</p>
+                @enderror
+                <input type="hidden" name="projectID" value="{{ $projectData->id }}">
+                <button type="submit">Add Member</button>
+            </form>
+        </div>
+        <hr>
+        <form action="{{ route('task.store') }}" method="POST" id="form-task" class="row g-2">
             @csrf
-            <input type="text" name="task" id="nameTask" placeholder="Task Name">
-            <input type="hidden" name="project" id="" value="{{ $projectData->id }}">
-            @error('task')
-                <p class="text-danger">{{ $message }}</p>
-            @enderror
-            <button type="submit" class="btn btn-primary">Add Task</button>
+            <div class="col-8">
+                <input class="form-control w-100" type="text" name="task" id="nameTask" placeholder="Task Name">
+                <input type="hidden" name="project" id="" value="{{ $projectData->id }}">
+                @error('task')
+                    <p class="text-danger">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="col-4">
+                <button type="submit" class="btn btn-primary w-100">Add Task</button>
+            </div>
         </form>
 
         <div class="mt-4">

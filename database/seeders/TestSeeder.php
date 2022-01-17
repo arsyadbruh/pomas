@@ -16,7 +16,8 @@ class TestSeeder extends Seeder
     {
         DB::table('tests')->insert([
             'name' => "Belajar HTML",
-            'status_test' => 1
+            'status_test' => 1,
+            'option_id' => 1
         ]);
         DB::table('tests')->insert([
             'name' => "Belajar PHP",

@@ -41,4 +41,5 @@ Route::middleware('auth')->group(function () {
     // Task Controller
     Route::resource('task', TaskController::class);
     Route::get('/taskupdate', [TaskController::class, 'toUpdate']);
+    Route::post('addMember', [ProjectController::class, 'addMember'])->name('project.addMember');
 });

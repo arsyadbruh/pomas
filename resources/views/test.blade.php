@@ -21,6 +21,13 @@
                     style="width: 28px; height: 28px" {{ $data->status_test == true ? 'checked' : null }}
                     value="{{ $data->id }}">
                 <label class="form-check-label fs-4 ms-3">{{ $data->name }}</label>
+                <select class="form-select" name="selecting" aria-label="Default select example">
+                    <option value="none">None</option>
+                    <option value="{{ $data->id }}" hidden class="idTest">yes</option>
+                    @foreach ($testOptions as $option)
+                        <option value="{{ $option->id }}" {{ $option->id == $data->option_id ? "selected" : '' }} >{{ $option->name }}</option>
+                    @endforeach
+                </select>
             </div>
         @endforeach
 
@@ -56,6 +63,25 @@
 
 
     <script>
+        $(document).ready(function() {
+            $('select.form-select').change(function() {
+                let data_id = $(this).find('.idTest').val();
+                let selectedData = $(this).val();
+                let selectedText = $(this).find('option:selected').text();
+                console.log("data : ",selectedData);
+                console.log("text : ",selectedText);
+                console.log("id input : ",data_id);
+                // $.ajax({
+                //     type: "GET",
+                //     dataType: "json",
+                //     url: "/onSelect",
+                //     data: {
+                //         'data_id' : data_id,
+                //         'selected' : selectedData
+                //     }
+                // });
+            })
+        });
         $(function() {
             $('.cekbox').change(function() {
 

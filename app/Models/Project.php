@@ -30,10 +30,14 @@ class Project extends Pivot
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'project_teams', 'project_id')
+        return $this->belongsToMany(User::class, 'project_teams', 'project_id', 'user_id')
             ->withTimestamps()
             ->withPivot('user_id')
             ->wherePivot('user_id', Auth::user()->id);
+    }
+
+    public function user() {
+        return $this->belongsToMany(User::class, 'project_teams', 'project_id', 'user_id');
     }
 
     public function tasks(){

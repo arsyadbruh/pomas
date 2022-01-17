@@ -19,7 +19,7 @@
         @foreach ($projectData as $project)
             @foreach ($project->users as $data)
                 <div class="col-6 col-lg-3">
-                    <a href="{{ route('project.show', $data->pivot->project_id) }}">
+                    <a href="{{ route('project.show', $data->pivot->project_id) }}" class="text-decoration-none text-capitalize text-black">
                         <div class="d-flex project-card flex-column justify-content-center align-items-center">
                             <i class="bi bi-kanban text-white mx-auto"></i>
                             <span class="mx-5 my-2 text-center">{{ $project->name }}</span>

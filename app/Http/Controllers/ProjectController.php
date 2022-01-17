@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
+    private $projectID;
+
     /**
      * Display a listing of the resource.
      *
@@ -64,6 +66,8 @@ class ProjectController extends Controller
         return redirect()->route('project.index');
     }
 
+
+
     /**
      * Display the specified resource.
      *
@@ -77,6 +81,21 @@ class ProjectController extends Controller
         $projectData = $project;
         $taskData = Task::where('project_id', $project->id)->get();
         return view('dashboard.project', compact('pageTitle','projectData', 'taskData'));
+    }
+
+    public function addMember(Request $request){
+
+        $request->validate([
+            'member' => 'required|email'
+        ]);
+
+        $project = Project::find($request->projectID);
+
+        $userData = User::where('email', $request->member)->get()->first();
+        $user = User::find($userData->id);
+        $project->users()->attach($user);
+
+        return redirect()->back()->with('addMemberSuccess', 'Success Add Member');
     }
 
     /**
