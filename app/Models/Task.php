@@ -21,4 +21,8 @@ class Task extends Model
     public function projects() {
         return $this->belongsTo(Project::class, 'project_id');
     }
+
+    public function users() {
+        return $this->hasMany(User::class);
+    }
 }

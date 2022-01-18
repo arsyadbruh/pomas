@@ -103,3 +103,14 @@
     background-color: #333;
     border-radius: 1rem;
 }
+
+#project .project-div:hover > a.project-card > .bi{
+    background-color: #517ca4;
+    transition: all 0.25s;
+}
+
+
+/* Task */
+.divider {
+    border-bottom: 3px solid #292f4c;
+}

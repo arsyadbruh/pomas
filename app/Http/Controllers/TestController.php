@@ -23,4 +23,17 @@ class TestController extends Controller
         $testdata->save();
 
     }
+
+    function changeOption(Request $request) {
+        $testdata = Test::find($request->data_id);
+
+        if ($request->selected === "none"){
+            $testdata->option_id = null;
+            $testdata->save();
+        } else {
+            $testdata->option_id = $request->selected;
+            $testdata->save();
+        }
+
+    }
 }

@@ -68,18 +68,21 @@
                 let data_id = $(this).find('.idTest').val();
                 let selectedData = $(this).val();
                 let selectedText = $(this).find('option:selected').text();
-                console.log("data : ",selectedData);
-                console.log("text : ",selectedText);
-                console.log("id input : ",data_id);
-                // $.ajax({
-                //     type: "GET",
-                //     dataType: "json",
-                //     url: "/onSelect",
-                //     data: {
-                //         'data_id' : data_id,
-                //         'selected' : selectedData
-                //     }
-                // });
+                console.log("data : ",selectedData === "none");
+                // console.log("text : ",selectedText);
+                // console.log("id input : ",data_id);
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: "/onSelect",
+                    data: {
+                        'data_id' : data_id,
+                        'selected' : selectedData
+                    },
+                    success: function(data) {
+                        console.log('success change status');
+                    }
+                });
             })
         });
         $(function() {

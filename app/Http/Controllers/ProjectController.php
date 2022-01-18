@@ -79,8 +79,10 @@ class ProjectController extends Controller
         //
         $pageTitle = "myproject";
         $projectData = $project;
+        $projectPivot = Project::with('users')->get();
         $taskData = Task::where('project_id', $project->id)->get();
-        return view('dashboard.project', compact('pageTitle','projectData', 'taskData'));
+        $assignUser = User::all();
+        return view('dashboard.project', compact('pageTitle','projectData', 'taskData', 'assignUser', 'projectPivot'));
     }
 
     public function addMember(Request $request){

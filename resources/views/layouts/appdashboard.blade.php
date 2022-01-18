@@ -75,7 +75,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link  {{ $pageTitle === 'mytask' ? 'active' : 'text-white'  }}" href="{{ route('mytask') }}">
+                            <a class="nav-link  {{ $pageTitle === 'mytask' ? 'active' : 'text-white'  }}" href="{{ route('task.index') }}">
                             <i class="bi {{ $pageTitle === 'mytask' ? 'bi-check-circle-fill' : 'bi-check-circle' }}"></i>
                                 My Task
                             </a>

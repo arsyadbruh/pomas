@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -16,7 +18,12 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        $pageTitle = "mytask";
+        $userID = Auth::user()->id;
+        $taskData = Task::where('user_id', $userID)->get();
+        $projectData= Project::with('users')->get();
+
+        return view('dashboard.mytask', compact('pageTitle', 'taskData', 'projectData'));
     }
 
     /**
@@ -89,6 +96,19 @@ class TaskController extends Controller
 
         $task->status = $request->status;
         $task->save();
+    }
+
+    function assignUser(Request $request) {
+        $task = Task::find($request->data_id);
+
+        if ($request->selected === "none"){
+            $task->user_id = null;
+            $task->save();
+        } else {
+            $task->user_id = $request->selected;
+            $task->save();
+        }
+
     }
 
     /**

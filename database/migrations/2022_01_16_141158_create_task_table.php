@@ -19,7 +19,9 @@ class CreateTaskTable extends Migration
             $table->text('description')->nullable();
             $table->boolean('status')->default(0);
             $table->bigInteger('project_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned()->nullable();
             $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

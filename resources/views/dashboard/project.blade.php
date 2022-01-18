@@ -6,15 +6,16 @@
             <a href="{{ route('project.index') }}" class="text-black text-decoration-none">
                 <i class="bi bi-arrow-left-circle"></i>
             </a>
-             {{ $projectData->name }}
-            </h1>
+            {{ $projectData->name }}
+        </h1>
         <hr>
         <div>
             @if (session('addMemberSuccess'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>{{ session('addMemberSuccess') }} !</strong> Member with {{ session('emailMember') }} has added to this project
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+                    <strong>{{ session('addMemberSuccess') }} !</strong> Member with {{ session('emailMember') }} has
+                    added to this project
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             @endif
             <form action="{{ route('project.addMember') }}" method="POST">
                 @csrf
@@ -53,7 +54,30 @@
                                 value="{{ $task->id }}">
                             <label class="form-check-label fs-4 ms-3">{{ $task->name }}</label>
                         </div>
-                        <div class="action-section">
+                        <div class="action-section d-flex">
+                            <div class="selection me-3">
+                                {{-- @foreach ($assignUser as $user)
+                                    @foreach ($user->projects as $item)
+                                        @if ($projectData->id == $item->pivot->project_id)
+                                            <p>{{ $user->username }}</p>
+                                        @endif
+                                    @endforeach
+                                @endforeach --}}
+                                <select class="form-select" name="selecting" aria-label="Default select example">
+                                    <option value="none">None</option>
+                                    <option value="{{ $task->id }}" hidden class="task-option-id"></option>
+                                    @foreach ($assignUser as $user)
+                                        @foreach ($user->projects as $item)
+                                            @if ($projectData->id == $item->pivot->project_id)
+                                                <option value="{{ $user->id }}"
+                                                    {{ $user->id == $task->user_id ? 'selected' : '' }}>
+                                                    {{ $user->username }}</option>
+                                            @endif
+                                        @endforeach
+
+                                    @endforeach
+                                </select>
+                            </div>
                             <form action="{{ route('task.destroy', [$task->id]) }}" method="POST">
                                 <a href="#" class="btn btn-primary">Detail</a>
                                 @csrf
@@ -70,34 +94,56 @@
 
     <div class="toast-container  position-absolute bottom-0 end-0 p-3">
 
-            <div id="liveToastChecked" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                    <img src="" class="rounded me-2" alt="...">
-                    <strong class="me-auto">Task</strong>
-                    <small>3 second</small>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body">
-                    Task Completed
-                </div>
+        <div id="liveToastChecked" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="" class="rounded me-2" alt="...">
+                <strong class="me-auto">Task</strong>
+                <small>3 second</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
+            <div class="toast-body">
+                Task Completed
+            </div>
+        </div>
 
-            <div id="liveToastUnCheck" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                    <img src="" class="rounded me-2" alt="...">
-                    <strong class="me-auto">Task</strong>
-                    <small>3 second</small>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body">
-                    Mark as Completed
-                </div>
+        <div id="liveToastUnCheck" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="" class="rounded me-2" alt="...">
+                <strong class="me-auto">Task</strong>
+                <small>3 second</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
+            <div class="toast-body">
+                Mark as Completed
+            </div>
+        </div>
     </div>
 
 
 
     <script>
+        $(document).ready(function() {
+            $('select.form-select').change(function() {
+                let data_id = $(this).find('.task-option-id').val();
+                let selectedData = $(this).val();
+                // let selectedText = $(this).find('option:selected').text();
+                // console.log("data : ",selectedData === "none");
+                // console.log("text : ",selectedText);
+                // console.log("id input : ",data_id);
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: "/taskAssign",
+                    data: {
+                        'data_id': data_id,
+                        'selected': selectedData
+                    },
+                    success: function(data) {
+                        console.log('success change status');
+                    }
+                });
+            })
+        });
         $(function() {
             $('.cekbox').change(function(event) {
                 event.preventDefault();
