@@ -9,87 +9,118 @@
             {{ $projectData->name }}
         </h1>
         <hr>
-        <div>
-            @if (session('addMemberSuccess'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>{{ session('addMemberSuccess') }} !</strong> Member with {{ session('emailMember') }} has
-                    added to this project
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-            <form action="{{ route('project.addMember') }}" method="POST">
-                @csrf
-                <input type="text" name="member" id="member">
-                @error('member')
-                    <p>{{ $message }}</p>
-                @enderror
-                <input type="hidden" name="projectID" value="{{ $projectData->id }}">
-                <button type="submit">Add Member</button>
-            </form>
-        </div>
-        <hr>
-        <form action="{{ route('task.store') }}" method="POST" id="form-task" class="row g-2">
-            @csrf
-            <div class="col-8">
-                <input class="form-control w-100" type="text" name="task" id="nameTask" placeholder="Task Name">
-                <input type="hidden" name="project" id="" value="{{ $projectData->id }}">
-                @error('task')
-                    <p class="text-danger">{{ $message }}</p>
-                @enderror
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-task-tab" data-bs-toggle="tab" data-bs-target="#nav-task"
+                    type="button" role="tab" aria-controls="nav-task" aria-selected="true">Task</button>
+                <button class="nav-link" id="nav-setting-project-tab" data-bs-toggle="tab"
+                    data-bs-target="#nav-setting-project" type="button" role="tab" aria-controls="nav-setting-project"
+                    aria-selected="false">Setting</button>
             </div>
-            <div class="col-4">
-                <button type="submit" class="btn btn-primary w-100">Add Task</button>
-            </div>
-        </form>
-
-        <div class="mt-4">
-            @if ($taskData->isEmpty())
-                <p>Tidak ada tugas</p>
-            @else
-                @foreach ($taskData as $task)
-                    <div class="form-check d-flex align-items-center justify-content-between mb-3">
-                        <div>
-                            <input class="form-check-input m-0 cekbox" type="checkbox" name="cekbok"
-                                style="width: 28px; height: 28px" {{ $task->status == true ? 'checked' : null }}
-                                value="{{ $task->id }}">
-                            <label class="form-check-label fs-4 ms-3">{{ $task->name }}</label>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-task" role="tabpanel" aria-labelledby="nav-task-tab">
+                <div class="mt-4">
+                    <form action="{{ route('task.store') }}" method="POST" id="form-task" class="row g-3">
+                        @csrf
+                        <div class="col-8">
+                            <input class="form-control w-100" type="text" name="task" id="nameTask" placeholder="Task Name">
+                            <input type="hidden" name="project" id="" value="{{ $projectData->id }}">
+                            @error('task')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
-                        <div class="action-section d-flex">
-                            <div class="selection me-3">
-                                {{-- @foreach ($assignUser as $user)
-                                    @foreach ($user->projects as $item)
-                                        @if ($projectData->id == $item->pivot->project_id)
-                                            <p>{{ $user->username }}</p>
-                                        @endif
-                                    @endforeach
-                                @endforeach --}}
-                                <select class="form-select" name="selecting" aria-label="Default select example">
-                                    <option value="none">None</option>
-                                    <option value="{{ $task->id }}" hidden class="task-option-id"></option>
-                                    @foreach ($assignUser as $user)
-                                        @foreach ($user->projects as $item)
-                                            @if ($projectData->id == $item->pivot->project_id)
-                                                <option value="{{ $user->id }}"
-                                                    {{ $user->id == $task->user_id ? 'selected' : '' }}>
-                                                    {{ $user->username }}</option>
-                                            @endif
-                                        @endforeach
-
-                                    @endforeach
-                                </select>
-                            </div>
-                            <form action="{{ route('task.destroy', [$task->id]) }}" method="POST">
-                                <a href="#" class="btn btn-primary">Detail</a>
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary w-100">Add Task</button>
                         </div>
+                    </form>
+
+                    <div class="mt-4">
+                        @if ($taskData->isEmpty())
+                            <p>Tidak ada tugas</p>
+                        @else
+                            @foreach ($taskData as $task)
+                                <div class="form-check d-flex align-items-center justify-content-between mb-3">
+                                    <div>
+                                        <input class="form-check-input m-0 cekbox" type="checkbox" name="cekbok"
+                                            style="width: 28px; height: 28px"
+                                            {{ $task->status == true ? 'checked' : null }} value="{{ $task->id }}">
+                                        <label class="form-check-label fs-4 ms-3">{{ $task->name }}</label>
+                                    </div>
+                                    <div class="action-section d-flex">
+                                        <div class="selection me-3">
+                                            <select class="form-select" name="selecting"
+                                                aria-label="Default select example">
+                                                <option value="none">None</option>
+                                                <option value="{{ $task->id }}" hidden class="task-option-id"></option>
+                                                @foreach ($assignUser as $user)
+                                                    @foreach ($user->projects as $item)
+                                                        @if ($projectData->id == $item->pivot->project_id)
+                                                            <option value="{{ $user->id }}"
+                                                                {{ $user->id == $task->user_id ? 'selected' : '' }}>
+                                                                {{ $user->username }}</option>
+                                                        @endif
+                                                    @endforeach
+
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <form action="{{ route('task.destroy', [$task->id]) }}" method="POST">
+                                            <a href="#" class="btn btn-primary">Detail</a>
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <hr>
+                            @endforeach
+                        @endif
                     </div>
-                    <hr>
-                @endforeach
-            @endif
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="nav-setting-project" role="tabpanel" aria-labelledby="nav-setting-project-tab">
+                <div class="mt-4">
+                    @if (session('addMemberSuccess'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>{{ session('addMemberSuccess') }} !</strong> Member with
+                            {{ session('emailMember') }}
+                            has added to this project
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+                    <form action="{{ route('project.addMember') }}" method="POST" class="row g-3">
+                        @csrf
+                        <div class="col-8">
+                            <input type="text" name="member" id="member" class="form-control">
+                            @error('member')
+                                <span class="text-danger">{{ $message }} !</span>
+                            @enderror
+                            <input type="hidden" name="projectID" value="{{ $projectData->id }}">
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary w-100">Add Member</button>
+                        </div>
+                    </form>
+                    <h3>Daftar Anggota Team</h3>
+                    <div class="mt-3">
+                        @foreach ($assignUser as $user)
+                            @foreach ($user->projects as $item)
+                                @if ($projectData->id == $item->pivot->project_id)
+                                    <p>Username : {{ $user->username }}</p>
+                                    <p>E-mail : {{ $user->email }}</p>
+                                    <hr>
+                                @endif
+                            @endforeach
+
+                        @endforeach
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
 
     <div class="toast-container  position-absolute bottom-0 end-0 p-3">
