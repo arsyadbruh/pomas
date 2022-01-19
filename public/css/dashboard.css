@@ -109,6 +109,31 @@
     transition: all 0.25s;
 }
 
+/* Project > show */
+
+#table-team-project,
+#table-task-project {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#table-team-project td,
+#table-team-project th,
+#table-task-project td,
+#table-task-project th{
+    border-bottom: 1px solid #dddddd;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.add-more-margin-bottom {
+    margin-bottom: 10rem;
+}
+
+
+
+
+
 
 /* Task */
 .divider {

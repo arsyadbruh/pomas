@@ -29,20 +29,6 @@
         <button class="w-100 btn btn-lg btn-primary mb-3" type="submit">Sign in</button>
         <span>Belum punya akun ? <a href="{{ route('register') }}">Daftar Sekarang</a> </span>
 
-
-        {{-- <div class="row mb-0">
-                        <div class="col-md-8 offset-md-4">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Login') }}
-                            </button>
-
-                            @if (Route::has('password.request'))
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
-                            @endif
-                        </div>
-                    </div> --}}
     </form>
 
 @endsection

@@ -18,6 +18,7 @@ class CreateTaskTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->boolean('status')->default(0);
+            $table->date('deadline')->nullable();
             $table->bigInteger('project_id')->unsigned();
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->foreign('project_id')->references('id')->on('projects');

@@ -44,13 +44,15 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // ddd($request->taskdate);
         $request->validate([
-            'task' => 'required'
+            'task' => 'required',
+            'taskdate' => 'date'
         ]);
 
         $task = new Task;
         $task->name = $request->task;
+        $task->deadline = $request->taskdate;
         $task->project_id = $request->project;
         $task->save();
 
@@ -63,9 +65,13 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $project_id)
     {
-        //
+        $task = Task::find($id);
+        $pageTitle = "myproject";
+        $projectID = $project_id;
+
+        return view('dashboard.detailTask', compact('task', 'pageTitle', 'projectID'));
     }
 
     /**

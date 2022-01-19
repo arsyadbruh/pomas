@@ -30,9 +30,12 @@ Route::get('/onSelect', [TestController::class, 'changeOption'])->name('onSelect
 Auth::routes();
 
 Route::middleware('auth')->group(function () {
-    // Route::get('/dashboard/my-task', function(){return view('dashboard.mytask',  ['pageTitle' => 'mytask']);})->name('mytask');
+    // Project
     Route::get('/dashboard', function(){return redirect()->route('project.index');});
     Route::resource('project', ProjectController::class);
+    Route::post('addMember', [ProjectController::class, 'addMember'])->name('project.addMember');
+    Route::post('kickMember', [ProjectController::class, 'kickMember'])->name('project.kickMember');
+
 
     // Dashboard profile user
     Route::resource('profile', UserController::class);
@@ -43,5 +46,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('task', TaskController::class);
     Route::get('/taskupdate', [TaskController::class, 'toUpdate']);
     Route::get('/taskAssign', [TaskController::class, 'assignUser']);
-    Route::post('addMember', [ProjectController::class, 'addMember'])->name('project.addMember');
+    Route::get('task/{task}/{project_id}', [TaskController::class, 'show'])->name('task.show');
+
 });

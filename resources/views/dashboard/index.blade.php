@@ -16,8 +16,9 @@
         {{-- project card --}}
         <div class="my-5"></div>
         <div class="row g-3">
-            {{-- <p>{{ $test }}</p> --}}
+            {{-- <p>{{ $projectData }}</p> --}}
             @foreach ($projectData as $project)
+            {{-- <p>{{ $project }}</p> --}}
                 @foreach ($project->users as $data)
                     <div class="col-6 col-lg-3 project-div">
                             <a href="{{ route('project.show', $data->pivot->project_id) }}"

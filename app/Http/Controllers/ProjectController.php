@@ -20,7 +20,7 @@ class ProjectController extends Controller
     public function index()
     {
         $pageTitle = "myproject";
-        $projectData= Project::with('users')->get();
+        $projectData= Project::with('users')->get(); // output berupa collection
         return view('dashboard.index', compact('pageTitle', 'projectData'));
     }
 
@@ -94,10 +94,29 @@ class ProjectController extends Controller
         $project = Project::find($request->projectID);
 
         $userData = User::where('email', $request->member)->get()->first();
+        // ddd($userData);
+        if ($userData == null){
+
+            return redirect()->back()->with('addMemberFail', $request->member);
+            // return "Fail bro";
+        }
+
         $user = User::find($userData->id);
         $project->users()->attach($user);
 
-        return redirect()->back()->with('addMemberSuccess', 'Success Add Member');
+        return redirect()->back()->with('addMemberSuccess', $user->username);
+    }
+
+    public function kickMember(Request $request){
+
+        $project = Project::find($request->projectID);
+        $userData = User::where('email', $request->emailMember)->get()->first();
+
+        $user = User::find($userData->id);
+        $user->projects()->detach($project);
+
+        return redirect()->back()->with('kickMemberSuccess', $user->username);
+
     }
 
     /**
@@ -120,7 +139,17 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $request->validate([
+            'projectname' => 'required'
+        ]);
+
+        $project->name = $request->projectname;
+        $project->description = $request->projectdesc;
+        $project->save();
+
+
+        return redirect()->back()->with('updateProjectSuccess', 'Project Updated');
+
     }
 
     /**
