@@ -9,15 +9,34 @@
                 </a>
                 {{ $project->name }}
             </h1>
-            @can('owner', [$project])
-                <div>
-                    <form action="{{ route('project.destroy', [$project]) }}" method="post">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="btn btn-danger">Delete Project</button>
-                    </form>
+            @canany(['admin', 'owner'], [$project])
+                <div class="d-flex">
+                    <div class="me-3">
+                        @cannot('admin', [$project])
+                            <form action="{{ route('project.destroy', [$project]) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-danger">Delete Project</button>
+                            </form>
+                        @endcannot
+                    </div>
+                    <div>
+                        <form action="{{ route('project.export') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="projectID" value="{{ $project->id }}">
+                            <button type="submit" class="btn btn-primary">Export PDF</button>
+                        </form>
+                    </div>
                 </div>
-            @endcan
+            @endcanany
+            {{-- <div>
+                <form action="{{ route('project.export') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="projectID" value="{{ $project->id }}">
+                    <button type="submit" class="btn btn-primary">Export PDF</button>
+                </form>
+            </div> --}}
+
         </div>
         <hr>
         <div class="alert-section">
@@ -45,9 +64,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
-            @if (session('deleteDeny'))
+            @if (session('denied'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>{{ session('deleteDeny') }} !</strong>
+                    <strong>{{ session('denied') }} !</strong>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif

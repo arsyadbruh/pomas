@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::post('addMember', [ProjectController::class, 'addMember'])->name('project.addMember');
     Route::post('kickMember', [ProjectController::class, 'kickMember'])->name('project.kickMember');
     Route::get('/updateRole', [ProjectController::class, 'updateMember'])->name('project.updateMember');
+    Route::post('export', [ProjectController::class, 'exportProject'])->name('project.export');
 
 
     // Dashboard profile user

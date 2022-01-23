@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
+use App\Models\Project;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+
+use function GuzzleHttp\Promise\all;
 
 class ProjectController extends Controller
 {
@@ -90,17 +93,18 @@ class ProjectController extends Controller
         //     abort(403, 'You dont have permission in this project');
         // }
 
-        $isOwner = Gate::denies('owner', [$project]);
-        $isMember = Gate::denies('member', [$project]);
-        $isAdmin = Gate::denies('admin', [$project]);
+        $isOwner = Gate::allows('owner', [$project]);
+        $isMember = Gate::allows('member', [$project]);
+        $isAdmin = Gate::allows('admin', [$project]);
 
         // jika bukan owner atau member atau admin maka tampilkan halaman abort(404, Page not found)
-        if($isOwner && $isMember && $isAdmin){
-            abort(404, 'Page not Found');
+        if($isOwner || $isMember || $isAdmin){
+            return view('dashboard.project', compact('pageTitle','project', 'taskData', 'assignUser', 'user'));
         }
 
-        // ika termasuk 3 role diatas maka tampilkan project
-        return view('dashboard.project', compact('pageTitle','project', 'taskData', 'assignUser', 'user'));
+
+        abort(404, 'Page not Found');
+        // return ($isAdmin || $isMember || $isOwner) ? 'true' : 'false';
     }
 
     public function addMember(Request $request){
@@ -189,7 +193,7 @@ class ProjectController extends Controller
     {
         // Selain owner tidak punya hak untuk menghapus project
         if(Gate::denies('owner', [$project])){
-            return redirect()->back()->with('deleteDeny', 'You dont have Permission');
+            return redirect()->back()->with('denied', 'You dont have Permission');
         }
 
         $projectName = $project->name;
@@ -199,5 +203,22 @@ class ProjectController extends Controller
         $project->delete();
 
         return redirect()->route('project.index')->with('deletedProject', 'Project'.$projectName.'has deleted');
+    }
+
+    public function exportProject(Request $request) {
+        $project = Project::find($request->projectID);
+
+        // if user is member then block and print error
+        if(!Gate::denies('member', [$project])){
+            return redirect()->back()->with('denied', 'You dont have Permission');
+        }
+
+        $userData = User::all();
+        $taskData = Task::where('project_id', $project->id)->get();
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('dashboard.exportProject', compact('project', 'userData', 'taskData'));
+        return $pdf->stream($project->name.'.pdf');
+
     }
 }
