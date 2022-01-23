@@ -16,17 +16,20 @@ class ProjectTeamSeeder extends Seeder
     {
         DB::table('project_teams')->insert([
             'project_id' => 1,
-            'user_id' => 1
+            'user_id' => 1,
+            'role' => 'owner'
         ]);
 
         DB::table('project_teams')->insert([
             'project_id' => 2,
-            'user_id' => 1
+            'user_id' => 1,
+            'role' => 'owner'
         ]);
 
         DB::table('project_teams')->insert([
             'project_id' => 1,
-            'user_id' => 2
+            'user_id' => 2,
+            'role' => 'member'
         ]);
     }
 }

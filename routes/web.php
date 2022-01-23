@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('project', ProjectController::class);
     Route::post('addMember', [ProjectController::class, 'addMember'])->name('project.addMember');
     Route::post('kickMember', [ProjectController::class, 'kickMember'])->name('project.kickMember');
+    Route::get('/updateRole', [ProjectController::class, 'updateMember'])->name('project.updateMember');
 
 
     // Dashboard profile user

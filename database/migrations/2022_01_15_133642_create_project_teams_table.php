@@ -17,6 +17,7 @@ class CreateProjectTeamsTable extends Migration
             $table->id();
             $table->bigInteger('project_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
+            $table->string('role');
             $table->foreign('project_id')->references('id')->on('projects');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

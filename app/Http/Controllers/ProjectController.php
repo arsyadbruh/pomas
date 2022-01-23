@@ -7,6 +7,8 @@ use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class ProjectController extends Controller
 {
@@ -20,7 +22,9 @@ class ProjectController extends Controller
     public function index()
     {
         $pageTitle = "myproject";
+        $user = Auth::user()->id;
         $projectData= Project::with('users')->get(); // output berupa collection
+        // ddd($projectData);
         return view('dashboard.index', compact('pageTitle', 'projectData'));
     }
 
@@ -60,7 +64,7 @@ class ProjectController extends Controller
 
         if($project->save()) {
             $projectdata = Project::latest()->first();
-            $user->projects()->attach($projectdata);
+            $user->projects()->attach($projectdata, ['role' => 'owner']);
         }
 
         return redirect()->route('project.index');
@@ -76,13 +80,27 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
         $pageTitle = "myproject";
-        $projectData = $project;
-        $projectPivot = Project::with('users')->get();
         $taskData = Task::where('project_id', $project->id)->get();
         $assignUser = User::all();
-        return view('dashboard.project', compact('pageTitle','projectData', 'taskData', 'assignUser', 'projectPivot'));
+        $user = User::find(Auth::user()->id);
+
+        // if (!$user->projectRole('owner', $project->id, $user->id)){
+            // ddd($user->projectRole('owner', $project->id, $user->id));
+        //     abort(403, 'You dont have permission in this project');
+        // }
+
+        $isOwner = Gate::denies('owner', [$project]);
+        $isMember = Gate::denies('member', [$project]);
+        $isAdmin = Gate::denies('admin', [$project]);
+
+        // jika bukan owner atau member atau admin maka tampilkan halaman abort(404, Page not found)
+        if($isOwner && $isMember && $isAdmin){
+            abort(404, 'Page not Found');
+        }
+
+        // ika termasuk 3 role diatas maka tampilkan project
+        return view('dashboard.project', compact('pageTitle','project', 'taskData', 'assignUser', 'user'));
     }
 
     public function addMember(Request $request){
@@ -102,7 +120,7 @@ class ProjectController extends Controller
         }
 
         $user = User::find($userData->id);
-        $project->users()->attach($user);
+        $project->users()->attach($user, ['role' => 'member']);
 
         return redirect()->back()->with('addMemberSuccess', $user->username);
     }
@@ -147,9 +165,18 @@ class ProjectController extends Controller
         $project->description = $request->projectdesc;
         $project->save();
 
-
         return redirect()->back()->with('updateProjectSuccess', 'Project Updated');
+    }
 
+    public function updateMember(Request $request) {
+        $user = User::find($request->selectedUser);
+
+        DB::table('project_teams')
+            ->where('project_id', $request->project_id)
+            ->where('user_id', $request->selectedUser)
+            ->update(['role' => $request->selectedRole]);
+
+        return redirect()->back()->with('updateRole', $user->username);
     }
 
     /**
@@ -160,6 +187,17 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        // Selain owner tidak punya hak untuk menghapus project
+        if(Gate::denies('owner', [$project])){
+            return redirect()->back()->with('deleteDeny', 'You dont have Permission');
+        }
+
+        $projectName = $project->name;
+        $task = Task::where('project_id', $project->id);
+        $task->delete();
+        DB::table('project_teams')->where('project_id', $project->id)->delete();
+        $project->delete();
+
+        return redirect()->route('project.index')->with('deletedProject', 'Project'.$projectName.'has deleted');
     }
 }

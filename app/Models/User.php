@@ -48,6 +48,15 @@ class User extends Authenticatable
 
     public function projects(){
         return $this->belongsToMany(Project::class, 'project_teams', 'user_id', 'project_id')
-            ->withTimestamps();
+            ->withTimestamps()
+            ->withPivot(['role', 'project_id', 'user_id']);
+    }
+
+    public function projectRole($role, $project, $user) {
+        if($this->projects()->wherePivot('role', $role)->wherePivot('project_id', $project)->wherePivot('user_id', $user)->first()){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

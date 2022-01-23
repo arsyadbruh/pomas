@@ -47,13 +47,13 @@ class TaskController extends Controller
         // ddd($request->taskdate);
         $request->validate([
             'task' => 'required',
-            'taskdate' => 'date'
+            'taskdate' => 'required|date'
         ]);
 
         $task = new Task;
         $task->name = $request->task;
         $task->deadline = $request->taskdate;
-        $task->project_id = $request->project;
+        $task->project_id = $request->projectid;
         $task->save();
 
         return redirect()->back();

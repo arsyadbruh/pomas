@@ -14,6 +14,12 @@
 
         <hr>
         {{-- project card --}}
+        @if (session('deletedProject'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <span> {{ session('deletedProject') }}</span>!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
         <div class="my-5"></div>
         <div class="row g-3">
             {{-- <p>{{ $projectData }}</p> --}}
