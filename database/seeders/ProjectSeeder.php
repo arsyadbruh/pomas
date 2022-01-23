@@ -15,15 +15,18 @@ class ProjectSeeder extends Seeder
     public function run()
     {
         DB::table('projects')->insert([
-            'name' => 'project pertama laravel',
-            'description' => 'Project membangun website dengan menggunakan framework laravel',
-            'owner_id' => 1
+            'name' => 'Website SISFO with Laravel',
+            'description' => 'Project membangun website dengan menggunakan framework laravel'
         ]);
 
         DB::table('projects')->insert([
-            'name' => 'project react native',
+            'name' => 'Mobile Apps with React Native',
             'description' => 'Project membangun aplikasi mobile dengan react native',
-            'owner_id' => 1
+        ]);
+
+        DB::table('projects')->insert([
+            'name' => 'Pembuatan Pembangkit Listrik Tenaga',
+            'description' => 'Project membangun sebuah pembangkit listrik ramah lingkungan',
         ]);
     }
 }

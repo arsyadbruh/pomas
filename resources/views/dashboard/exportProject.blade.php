@@ -62,7 +62,7 @@
                     @foreach ($users->projects as $user)
                         @if ($project->id == $user->pivot->project_id)
                             <tr>
-                                <td>{{ $users->username }}</td>
+                                <td>{{ $users->name }}</td>
                                 <td>{{ $users->email }}</td>
                             </tr>
                         @endif

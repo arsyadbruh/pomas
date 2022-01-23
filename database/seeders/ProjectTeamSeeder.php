@@ -14,22 +14,43 @@ class ProjectTeamSeeder extends Seeder
      */
     public function run()
     {
+        // Project 1 (website)
         DB::table('project_teams')->insert([
             'project_id' => 1,
             'user_id' => 1,
             'role' => 'owner'
         ]);
+        DB::table('project_teams')->insert([
+            'project_id' => 1,
+            'user_id' => 2,
+            'role' => 'member'
+        ]);
+        DB::table('project_teams')->insert([
+            'project_id' => 1,
+            'user_id' => 3,
+            'role' => 'admin'
+        ]);
 
+        // project 2 (react native)
         DB::table('project_teams')->insert([
             'project_id' => 2,
             'user_id' => 1,
             'role' => 'owner'
         ]);
 
+
+        // Project 3 (tenaga listrik)
         DB::table('project_teams')->insert([
-            'project_id' => 1,
+            'project_id' => 3,
             'user_id' => 2,
-            'role' => 'member'
+            'role' => 'owner'
         ]);
+        DB::table('project_teams')->insert([
+            'project_id' => 3,
+            'user_id' => 3,
+            'role' => 'admin'
+        ]);
+
+
     }
 }
