@@ -173,13 +173,16 @@
                                             <td style="text-align: center;">
                                                 {{ date('d F Y', strtotime($task->deadline)) }}</td>
                                             <td style="text-align: center;"> {{-- action --}}
-                                                <form action="{{ route('task.destroy', [$task->id]) }}" method="POST">
-                                                    <a href="{{ route('task.show', ['task' => $task->id, 'project_id' => $project->id]) }}"
-                                                        class="btn btn-primary">Detail</a>
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </form>
+                                                <div class="d-flex flex-column flex-lg-row justify-content-center">
+                                                    <a href="{{ route('task.show', ['task' => $task->id, 'project_id' => $project->id]) }}" class="btn btn-primary me-2">Detail</a>
+                                                    @canany(['admin', 'owner'], [$project])
+                                                        <form action="{{ route('task.destroy', [$task->id]) }}" method="POST">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                                        </form>
+                                                    @endcanany
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
