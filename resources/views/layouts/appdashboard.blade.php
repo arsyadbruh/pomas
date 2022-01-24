@@ -25,6 +25,8 @@
 
     {{-- Javascript --}}
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+
 </head>
 
 <body>
@@ -105,7 +107,6 @@
         </div>
     </div>
 
- <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
 </body>
 
 </html>

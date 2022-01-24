@@ -7,6 +7,7 @@ use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
 {
@@ -94,7 +95,26 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $task = Task::find($id);
+        $projectID = $task->project_id;
+        $project = Project::find($projectID);
+
+        if(!Gate::denies('member', [$project])){
+            return redirect()->back()->with('error', 'You dont have permission');
+        }
+
+        $request->validate([
+            'taskname' => 'required',
+            'taskdate' => 'required',
+        ]);
+
+        $task->name = $request->taskname;
+        $task->description = $request->taskdesc;
+        $task->deadline = $request->taskdate;
+        $task->save();
+
+        return redirect()->back()->with('success', 'Task Updated');
+
     }
 
     public function toUpdate(Request $request){

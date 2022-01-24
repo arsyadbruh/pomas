@@ -63,7 +63,6 @@ class ProjectController extends Controller
 
         $project->name = $request->name;
         $project->description = $request->description;
-        $project->owner_id = $user->id;
 
         if($project->save()) {
             $projectdata = Project::latest()->first();
