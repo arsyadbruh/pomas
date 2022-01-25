@@ -5,6 +5,7 @@
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
+
         <div class="form-floating mb-3">
             <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email"
                 placeholder="Email" value="{{ old('email') }}">
@@ -15,6 +16,7 @@
                 </span>
             @enderror
         </div>
+
         <div class="form-floating mb-3">
             <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password"
                 placeholder="Password">

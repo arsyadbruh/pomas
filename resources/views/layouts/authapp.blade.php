@@ -49,11 +49,13 @@
 <body>
     <main class="w-100 m-auto">
         <div class="container d-flex justify-content-center justify-content-lg-between align-items-center flex-wrap">
+
             <div class="text-content">
                 <h1 class="title-brand">POMAS</h1>
                 <p class="fs-5">Project Manager Application Website. Kelola project mu dengan lebih simple dan
                     mudah</p>
             </div>
+
             <div class="form-content">
                 @yield('content')
             </div>

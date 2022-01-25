@@ -80,16 +80,3 @@
 
 @endsection
 
-
-{{--
-
-@auth
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="btn btn-lg btn-danger">Logout</button>
-            </form>
-            @else
-            <p><a href="{{ route('login') }}">Go to Login</a></p>
-        @endauth
-
- --}}
