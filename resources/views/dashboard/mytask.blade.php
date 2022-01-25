@@ -10,10 +10,11 @@
             @foreach ($taskData as $task)
             {{-- jika user tergabung dalam project dan punya tugas pada project tersebut --}}
                 @if ($task->project_id == $data->pivot->project_id)
-                    <div class="d-flex align-items-center border-bottom mt-3 toggle-collpase-task">
+                    <div class="d-flex align-items-center border-bottom mt-3 toggle-collpase-task justify-content-between">
                         <a class="text-decoration-none fw-bold text-capitalize" role="button" data-bs-toggle="collapse"
                             href="#collapse{{ $project->id }}" aria-expanded="false" aria-controls="collapse{{ $project->id }}">
                             <i class="bi bi-caret-right-fill"></i> {{ $project->name }}</a>
+                        <a href="{{ route('project.show', [$project->id]) }}" class="ms-3 btn btn-sm btn-outline-primary">see project</a>
                     </div>
                     @break
                 @endif

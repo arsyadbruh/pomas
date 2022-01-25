@@ -101,18 +101,22 @@ class UserController extends Controller
         //
         $user = User::find($id);
 
-        if($user->email === $request->email){
+        // jika email user masih sama
+        if($user->email === $request->email || $user->username === $request->username){
             $request->validate([
-                'username' => 'required|alpha_dash|unique:users,username',
+                'name' => 'required',
+                'username' => 'required|alpha_dash',
                 'email' => 'required|email'
             ]);
-        } else {
+        } else { // jika email user tidak sama maka cek unique
             $request->validate([
+                'name' => 'required',
                 'username' => 'required|alpha_dash|unique:users,username',
                 'email' => 'required|email|unique:users,email'
             ]);
         }
 
+        $user->name = $request->name;
         $user->username = $request->username;
         $user->email = $request->email;
         $user->save();
