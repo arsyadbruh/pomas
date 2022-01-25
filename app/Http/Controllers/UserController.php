@@ -62,12 +62,15 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
-        $user = User::find($id);
-        $pageTitle = 'editProfile';
 
-        return view('dashboard.profile.edit', compact('user', 'pageTitle'));
+        if (Auth::user()->id == $id) {
+            $user = User::find($id);
+            $pageTitle = 'editProfile';
 
+            return view('dashboard.profile.edit', compact('user', 'pageTitle'));
+        }
+
+        return redirect()->route('profile.index');
     }
 
     /**
