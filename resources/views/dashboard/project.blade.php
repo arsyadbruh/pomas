@@ -327,14 +327,11 @@
 
 
     <script>
+        // assign user to task
         $(document).ready(function() {
             $('select#assign-user').change(function() {
                 let data_id = $(this).find('.task-option-id').val();
                 let selectedData = $(this).val();
-                // let selectedText = $(this).find('option:selected').text();
-                // console.log("data : ",selectedData === "none");
-                // console.log("text : ",selectedText);
-                // console.log("id input : ",data_id);
                 $.ajax({
                     type: "GET",
                     dataType: "json",
@@ -349,14 +346,13 @@
                 });
             })
         });
+
+        // change user role
          $(document).ready(function() {
             $('select#user-role').change(function() {
                 let data_id = $(this).find('.task-option-id').val();
                 let selectedData = $(this).val();
                 let selectedText = $(this).find('option:selected').text();
-                // console.log("data : ",selectedData === "none");
-                // console.log("text : ",selectedText);
-                // console.log("id input : ",data_id);
                 $.ajax({
                     type: "GET",
                     dataType: "json",
@@ -372,9 +368,10 @@
                 });
             })
         });
+
+        // update status task
         $(function() {
             $('.cekbox').change(function(event) {
-                event.preventDefault();
 
                 let statusChecked = $(this).is(':checked');
                 let isCheck = statusChecked ? 1 : 0;
@@ -403,6 +400,8 @@
 
             });
         });
+
+        // date picker
         $(function() {
             $('#taskDatepicker').datepicker({
                 format: "yyyy/mm/dd",

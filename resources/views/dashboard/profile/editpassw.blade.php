@@ -15,7 +15,7 @@
             <div class="mb-3 row">
                 <label for="oldPassword" class="col-sm-2 col-form-label">Current Password</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="oldPassword" name="oldPassword" >
+                    <input type="text" class="form-control" id="oldPassword" name="oldPassword">
                 </div>
                 @error('oldPassword')
                     <p class="text-danger">{{ $message }}</p>
@@ -24,7 +24,7 @@
             <div class="mb-3 row">
                 <label for="password" class="col-sm-2 col-form-label">New Password</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="usern" name="password" >
+                    <input type="text" class="form-control" id="usern" name="password">
                 </div>
                 @error('password')
                     <p class="text-danger">{{ $message }}</p>
@@ -33,7 +33,7 @@
             <div class="mb-3 row">
                 <label for="password_confirmation" class="col-sm-2 col-form-label">Confirmation</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="password_confirmation" name="password_confirmation" >
+                    <input type="text" class="form-control" id="password_confirmation" name="password_confirmation">
                 </div>
                 @error('password_confirmation')
                     <p class="text-danger">{{ $message }}</p>
