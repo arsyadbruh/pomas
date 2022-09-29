@@ -49,14 +49,13 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required'
+        ]);
 
         $project = new Project();
         $user = User::find(Auth::user()->id);
-
-        $request->validate([
-           'name' => 'required',
-           'description' => 'required'
-        ]);
 
         $project->name = $request->name;
         $project->description = $request->description;
@@ -82,7 +81,7 @@ class ProjectController extends Controller
         $pageTitle = "myproject";
         $taskData = Task::where('project_id', $project->id)->get();
         $assignUser = User::all();
-        $user = User::find(Auth::user()->id);
+        //$user = auth()->user();
 
         // if (!$user->projectRole('owner', $project->id, $user->id)){
             // ddd($user->projectRole('owner', $project->id, $user->id));
@@ -95,7 +94,7 @@ class ProjectController extends Controller
 
         // jika bukan owner atau member atau admin maka tampilkan halaman abort(404, Page not found)
         if($isOwner || $isMember || $isAdmin){
-            return view('dashboard.project', compact('pageTitle','project', 'taskData', 'assignUser', 'user'));
+            return view('dashboard.project', compact('pageTitle','project', 'taskData', 'assignUser'));
         }
 
 

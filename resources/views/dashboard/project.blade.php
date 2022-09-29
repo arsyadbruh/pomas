@@ -143,10 +143,10 @@
                                             <td > {{-- Penanggung Jawab --}}
                                                 {{-- id user is member then just print penanggung jawab --}}
                                                 @canany(['member'], [$project])
-                                                    @foreach ($assignUser as $user)
-                                                        @foreach ($user->projects as $item)
-                                                            @if ($user->id == $task->user_id )
-                                                                {{ $user->username }}
+                                                    @foreach ($assignUser as $users)
+                                                        @foreach ($users->projects as $item)
+                                                            @if ($users->id == $task->user_id )
+                                                                {{ $users->username }}
                                                                 @break
                                                             @endif
                                                         @endforeach
@@ -158,12 +158,12 @@
                                                         <option value="none">None</option>
                                                         <option value="{{ $task->id }}" hidden class="task-option-id">
                                                         </option>
-                                                        @foreach ($assignUser as $user)
-                                                            @foreach ($user->projects as $item)
+                                                        @foreach ($assignUser as $users)
+                                                            @foreach ($users->projects as $item)
                                                                 @if ($project->id == $item->pivot->project_id)
-                                                                    <option value="{{ $user->id }}"
-                                                                        {{ $user->id == $task->user_id ? 'selected' : '' }}>
-                                                                        {{ $user->username }}</option>
+                                                                    <option value="{{ $users->id }}"
+                                                                        {{ $users->id == $task->user_id ? 'selected' : '' }}>
+                                                                        {{ $users->username }}</option>
                                                                 @endif
                                                             @endforeach
                                                         @endforeach
