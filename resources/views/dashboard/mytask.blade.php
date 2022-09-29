@@ -32,14 +32,18 @@
         @endforeach
     @endforeach
 
-    <script>
-        $(document).ready(function() {
-            $('.toggle-collpase-task').on('click', 'a', function() {
-                let iconToggle = $(this).find('i');
-                // console.log(iconToggle);
-                iconToggle.toggleClass('bi-caret-right-fill bi-caret-down-fill');
-            });
-        });
-    </script>
-
 @endsection
+
+@section('js-script')
+<script>
+    $(document).ready(function() {
+        $('.toggle-collpase-task').on('click', 'a', function() {
+            let iconToggle = $(this).find('i');
+            // console.log(iconToggle);
+            iconToggle.toggleClass('bi-caret-right-fill bi-caret-down-fill');
+        });
+    });
+</script>
+@endsection
+
+

@@ -41,16 +41,22 @@
             </div>
         </form>
     </div>
-
-    <script>
-        $(function() {
-            $('#taskDatepicker').datepicker({
-                format: "yyyy/mm/dd",
-                weekStart: 0,
-                calendarWeeks: true,
-                autoclose: true,
-                todayHighlight: true
-            });
-        });
-    </script>
 @endsection
+
+@section('js-script')
+
+<script>
+    $(function() {
+        $('#taskDatepicker').datepicker({
+            format: "yyyy/mm/dd",
+            weekStart: 0,
+            calendarWeeks: true,
+            autoclose: true,
+            todayHighlight: true
+        });
+    });
+</script>
+
+@endsection
+
+

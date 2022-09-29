@@ -107,6 +107,8 @@
         </div>
     </div>
 
+    @yield('js-script')
+
 </body>
 
 </html>
