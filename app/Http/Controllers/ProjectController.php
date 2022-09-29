@@ -15,8 +15,6 @@ use function GuzzleHttp\Promise\all;
 
 class ProjectController extends Controller
 {
-    private $projectID;
-
     /**
      * Display a listing of the resource.
      *
@@ -38,7 +36,6 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
         $pageTitle = "myproject";
 
         return view('dashboard.createProject', compact('pageTitle'));
@@ -140,16 +137,6 @@ class ProjectController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Project  $project
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Project $project)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
