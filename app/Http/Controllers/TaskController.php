@@ -23,6 +23,7 @@ class TaskController extends Controller
         $userID = Auth::user()->id;
         $taskData = Task::where('user_id', $userID)->get();
         $projectData= Project::with('users')->get();
+        //ddd($projectData);
 
         return view('dashboard.mytask', compact('pageTitle', 'taskData', 'projectData'));
     }

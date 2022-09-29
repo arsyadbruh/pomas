@@ -138,7 +138,7 @@ class UserController extends Controller
     {
         $validate = $request->validate([
             'oldPassword'=>'required',
-            'password'=>'required|required_with:password_confirmation'
+            'password'=>'required|required_with:password_confirmation|confirmed'
         ]);
 
         $user = User::find(Auth::user()->id);

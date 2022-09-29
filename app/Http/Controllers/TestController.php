@@ -5,9 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Test;
 use App\Models\TestOption;
 use Illuminate\Http\Request;
+use Symfony\Component\Console\Input\Input;
 
 class TestController extends Controller
 {
+
+    function getTes(Request $request){
+        foreach($request as $key => $params){
+            dump($params);
+        }
+        die();
+    }
+
     //
     function index() {
         $testdata = Test::all();
