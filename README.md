@@ -15,11 +15,24 @@ POMAS is a website-based application combined with laravel framework, bootstrap,
     npm install && npm run dev
     ```
 
-3. Create database in your local and named it "pomas"
-4. After that, run the command below. this command will create table and generate data dummy
+3. Create env file from `env.example`. Setup environment
+4. Create database in your local and named it "pomas"
+5. After that, run the command below. this command will create table and generate data dummy
 
     ```shell
     php artisan migrate --seed
     ```
 
-5. Then, run `php artisan serve` to run laravel.
+6. Then, run `php artisan serve` to run laravel.
+
+### List Default user and password
+
+Password: `pomas1234`
+
+| Email | Username |
+| :---:| :---:|
+| beta@pomas.com | beta |
+| alpha@pomas.com | alpha |
+| jafrick@pomas.com | jafrick |
+
+You can see default user in `database\seeders\UserSeeder.php`
